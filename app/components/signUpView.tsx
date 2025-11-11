@@ -1,19 +1,47 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Header from "./Header";
-import BuyerAuth from "./buyer-page";
-import SellerAuth from "./seller-page";
 
 export default function SignUpView() {
-  const pathname = usePathname();
-  const [isLogin, setIsLogin] = useState(pathname !== "/signup");
   const [userType, setUserType] = useState<"seller" | "buyer" | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [timer, setTimer] = useState(60);
+  const [startTimer, setStartTimer] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (startTimer && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval!);
+            setStartTimer(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [startTimer, timer]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   const navigation = useRouter();
 
@@ -28,9 +56,8 @@ export default function SignUpView() {
     lga: "",
     address: "",
     businessName: "",
+    code: "",
   });
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -41,12 +68,11 @@ export default function SignUpView() {
 
   return (
     <div className="min-h-screen w-full bg-white">
-      <div className="flex relative max-h-[12vh] h-auto w-full">
-        <Header bgClass="bg-[#E4E4E4EB]" />
-      </div>
-      <div className="flex flex-col lg:flex-row h-[88vh]">
+      <Header bgClass="bg-[#E4E4E4EB]" />
+
+      <div className="flex flex-col lg:flex-row h-full">
         {/* Left Section - Image with Overlay */}
-        <div className="lg:w-1/2 relative h-full">
+        <div className="lg:w-1/2 relative h-96 lg:h-screen">
           <Image
             src="/images/auth-image.png"
             alt="ReePower Auth"
@@ -87,27 +113,33 @@ export default function SignUpView() {
               {/* Sign In As Section */}
               <div className="mb-8">
                 <div className="w-full flex justify-between items-center mb-3">
-                  <h1 className="text-3xl xl:text-4xl font-bold text-[#000000]  font-parkinsans">
+                  <h1 className="text-xl lg:text-3xl xl:text-4xl font-bold text-[#000000]  font-parkinsans">
                     {currentPage !== 3
                       ? currentPage === 4
                         ? "Business Information"
+                        : currentPage === 5
+                        ? "Verify Your Phone Number"
                         : "Create an Account"
                       : "What are you registering as"}
                   </h1>
-                  <span className="text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
+                  <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
                     Step {currentPage} of 4
                   </span>
                 </div>
 
-                <p className="text-gray-600 font-parkinsans mb-6">
-                  Reepower is your all-in-one platform for buying and selling
-                  recyclable materials across Nigeria&apos;s.{" "}
-                  <button
-                    onClick={() => navigation.push("/auth")}
-                    className=" text-[#14841E] hover:text-[#144E42] font-semibold underline cursor-pointer"
-                  >
-                    Sign in
-                  </button>
+                <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
+                  {currentPage === 5
+                    ? `We've sent a 6-digit verification code to ${formData.phone} Enter the code below to continue setting up your account.'`
+                    : `Reepower is your all-in-one platform for buying and selling
+                  recyclable materials across Nigeria `}
+                  {currentPage !== 5 && (
+                    <button
+                      onClick={() => navigation.push("/auth")}
+                      className=" text-[#14841E] hover:text-[#144E42] font-semibold underline cursor-pointer"
+                    >
+                      Sign in
+                    </button>
+                  )}
                 </p>
               </div>
 
@@ -501,16 +533,108 @@ export default function SignUpView() {
                   <button
                     type="submit"
                     onClick={() => {
-                      setCurrentPage(2);
+                      setCurrentPage(5);
+                      setStartTimer(true);
                     }}
                     disabled={
-                      !formData.email || !formData.fullName || !formData.phone
+                      !formData.state ||
+                      !formData.lga ||
+                      !formData.businessName ||
+                      !formData.address
                     }
                     className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Continue
                   </button>
                 </form>
+              )}
+
+              {currentPage === 5 && (
+                <div className="space-y-3 mb-6">
+                  {/* create an input where we have a box each for 6 digit pins with border white/50 */}
+                  <div>
+                    <label
+                      htmlFor="verificationCode"
+                      className="block text-sm font-semibold text-gray-700 mb-2 font-parkinsans"
+                    >
+                      Verification Code
+                    </label>
+                    {/* get the values of this input and save in code */}
+
+                    <div className="flex gap-3 w-full justify-between">
+                      {[...Array(6)].map((_, index) => (
+                        <input
+                          key={index}
+                          ref={(el) => {
+                            inputRefs.current[index] = el;
+                          }}
+                          type="text"
+                          maxLength={1}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value) {
+                              const newCode = formData.code.split("");
+                              newCode[index] = value;
+                              setFormData({
+                                ...formData,
+                                code: newCode.join(""),
+                              });
+                              if (index < 5) {
+                                inputRefs.current[index + 1]?.focus();
+                              }
+                            } else {
+                              const newCode = formData.code.split("");
+                              newCode[index] = "";
+                              setFormData({
+                                ...formData,
+                                code: newCode.join(""),
+                              });
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (
+                              e.key === "Backspace" &&
+                              !e.currentTarget.value &&
+                              index > 0
+                            ) {
+                              inputRefs.current[index - 1]?.focus();
+                            }
+                          }}
+                          className="w-12 h-12 text-center text-black text-xl font-parkinsans rounded-xl border border-gray-300 focus:border-[#A8E959] focus:ring-2 focus:ring-[#A8E959]/20 outline-none transition-all"
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={!formData.code || formData.code.length < 6}
+                    className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Verify Code
+                  </button>
+
+                  {/* create the resend code timer here for one minutes */}
+                  <div className="text-gray-600 font-parkinsans">
+                    <button
+                      type="button"
+                      disabled={startTimer}
+                      onClick={() => {
+                        setTimer(60);
+                        setStartTimer(true);
+                        // TODO: Add resend API call here if needed
+                      }}
+                      className={`font-medium ${
+                        startTimer
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "text-[#14841E] hover:text-[#14841E] underline cursor-pointer"
+                      }`}
+                    >
+                      Resend Code
+                    </button>{" "}
+                    {startTimer && `in ${formatTime(+timer)} seconds`}
+                  </div>
+                </div>
               )}
             </div>
           </div>

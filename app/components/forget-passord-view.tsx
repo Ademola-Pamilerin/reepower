@@ -78,9 +78,7 @@ export default function ForgotPasswordView() {
 
   return (
     <div className="min-h-screen w-full bg-white">
-      <div className="flex relative max-h-[12vh] h-auto w-full">
-        <Header bgClass="bg-[#E4E4E4EB]" />
-      </div>
+      <Header bgClass="bg-[#E4E4E4EB]" />
       <div className="flex flex-col lg:flex-row h-[88vh]">
         {/* Left Section - Image with Overlay */}
         <div className="lg:w-1/2 relative h-full">
@@ -110,10 +108,10 @@ export default function ForgotPasswordView() {
           <div className="flex-1 flex items-center justify-center px-6 py-12">
             <div className="w-full max-w-lg">
               <div
-                className="text-black/60 mb-6 cursor-pointer text-lg"
+                className="text-black/60 mb-6 cursor-pointer text-sm lg:text-lg"
                 onClick={() => {
                   if (currentPage === 1) {
-                    navigations.push("/auth")
+                    navigations.push("/auth");
                     return;
                   } else {
                     setCurrentPage((prev) => prev - 1);
@@ -126,11 +124,11 @@ export default function ForgotPasswordView() {
 
               {/* Sign In As Section */}
               <div className="mb-8">
-                <h1 className="text-3xl xl:text-4xl font-bold text-[#000000] mb-3 font-parkinsans">
+                <h1 className="text-xl lg:text-3xl xl:text-4xl font-bold text-[#000000] mb-3 font-parkinsans">
                   {currentPage === 1 && "Forgot Password"}
                   {currentPage === 2 && "Enter Verification Code"}
                 </h1>
-                <p className="text-gray-600 font-parkinsans mb-6">
+                <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
                   {currentPage === 1 &&
                     `Enter your registered email or phone number. We&apos;ll send
                   you a code to reset your password.`}

@@ -9,20 +9,14 @@ export default function Footer() {
           {/* Logo and Copyright */}
           <div className="md:col-span-3">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
+              <div className="w-10 h-10 rounded flex items-center justify-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="ReePower"
+                  width={40}
+                  height={80}
+                  className="object-contain w-full h-full"
+                />
               </div>
               <span className="text-2xl font-bold text-white font-parkinsans">
                 ReePower
@@ -148,9 +142,7 @@ export default function Footer() {
 
         {/* Social Media Icons */}
         <div className="flex justify-between border-t border-green-700 flex-wrap mt-8 items-center py-5">
-          <p className="text-white text-sm font-parkinsans">
-            © ReePower 2025
-          </p>
+          <p className="text-white text-sm font-parkinsans">© ReePower 2025</p>
           <div className="flex flex-wrap justify-center md:justify-end gap-4">
             <a
               href="https://facebook.com"

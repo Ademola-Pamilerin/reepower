@@ -19,9 +19,7 @@ export default function AuthView() {
 
   return (
     <div className="min-h-screen w-full bg-white">
-      <div className="flex relative max-h-[12vh] h-auto w-full">
-        <Header bgClass="bg-[#E4E4E4EB]" />
-      </div>
+      <Header bgClass="bg-[#E4E4E4EB]" />
       <div className="flex flex-col lg:flex-row h-[88vh]">
         {/* Left Section - Image with Overlay */}
         <div className="lg:w-1/2 relative h-full">
@@ -52,7 +50,7 @@ export default function AuthView() {
             <div className="w-full max-w-lg">
               {currentPage !== 1 && (
                 <div
-                  className="text-black/60 mb-6 cursor-pointer text-lg"
+                  className="text-black/60 mb-2 lg:mb-6 cursor-pointer text-sm lg:text-lg"
                   onClick={() => {
                     setCurrentPage(1);
                     // setUserType(null);
@@ -64,7 +62,7 @@ export default function AuthView() {
               )}
               {/* Sign In As Section */}
               <div className="mb-8">
-                <h1 className="text-3xl xl:text-4xl font-bold text-[#000000] mb-3 font-parkinsans">
+                <h1 className="text-xl lg:text-3xl xl:text-4xl font-bold text-[#000000] mb-3 font-parkinsans">
                   Sign In As{" "}
                   {currentPage === 2 && userType === "buyer" && (
                     <span>Buyer</span>
@@ -73,7 +71,7 @@ export default function AuthView() {
                     <span>Seller</span>
                   )}
                 </h1>
-                <p className="text-gray-600 font-parkinsans mb-6">
+                <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
                   Reepower is your all-in-one platform for buying and selling
                   recyclable materials across Nigeria&apos;s.{" "}
                   <button
