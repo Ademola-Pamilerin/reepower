@@ -1,4 +1,4 @@
-import ForgotPasswordView from "../components/forget-passord-view";
+import ForgotPasswordView from "../components/auth/ForgotPasswordView";
 
 export default function AuthPage() {
   return <ForgotPasswordView />;

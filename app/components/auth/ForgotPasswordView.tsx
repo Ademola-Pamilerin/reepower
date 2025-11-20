@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Header from "./Header";
 import AuthLayout from "./AuthLayout";
-import FormInput from "./FormInput";
-import VerificationCodeInput from "./VerificationCodeInput";
-import Timer from "./Timer";
+import FormInput from "./inputs/FormInput";
+import VerificationCodeInput from "./inputs/VerificationCodeInput";
+import Timer from "../shared/Timer";
 import { toast } from "sonner";
 
 export default function ForgotPasswordView() {

@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Header from "./Header";
 import AuthLayout from "./AuthLayout";
-import BuyerAuth from "./buyer-page";
-import SellerAuth from "./seller-page";
+import BuyerAuth from "./BuyerAuth";
+import SellerAuth from "./SellerAuth";
 
 export default function AuthView() {
   const pathname = usePathname();
@@ -118,6 +117,3 @@ export default function AuthView() {
     </AuthLayout>
   );
 }
-
-
-

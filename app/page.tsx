@@ -1,11 +1,11 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Features from "./components/Features";
-import WhoWeServe from "./components/WhoWeServe";
-import RecyclablesGrid from "./components/RecyclablesGrid";
-import CTABanner from "./components/CTABanner";
-import FAQ from "./components/FAQ";
-import Footer from "./components/Footer";
+import Header from "./components/layout/Header";
+import Hero from "./components/landing/Hero";
+import Features from "./components/landing/Features";
+import WhoWeServe from "./components/landing/WhoWeServe";
+import RecyclablesGrid from "./components/landing/RecyclablesGrid";
+import CTABanner from "./components/landing/CTABanner";
+import FAQ from "./components/landing/FAQ";
+import Footer from "./components/layout/Footer";
 
 export default function Home() {
   // Sample data for "Purchase Waste Recyclables Available Near You"
