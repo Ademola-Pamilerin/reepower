@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function BuyerNavigation() {
@@ -29,7 +30,7 @@ export default function BuyerNavigation() {
     },
     {
       name: "Buyer's Marketplace",
-      path: "/buyers/marketplace",
+      path: "/buyers",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +111,21 @@ export default function BuyerNavigation() {
   ];
 
   return (
-    <nav className="hidden lg:block w-full bg-[#144E26] shadow-md py-5">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="hidden lg:block w-full bg-[#144E26] shadow-md py-5 relative overflow-hidden">
+      {/* Background Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+        <div className="flex flex-row items-center gap-4">
+          <Image
+            src="/images/logo.png"
+            alt="ReePower"
+            width={150}
+            height={150}
+            className="object-contain"
+          />
+          <span className="text-6xl font-bold font-parkinsans text-white">ReePower</span>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
         <div className="flex items-center gap-1">
           {/* Buyer Mode Badge */}
           <div className="flex w-48 justify-center items-center gap-2 px-4 py-3 bg-white  rounded-xl">
@@ -136,18 +150,17 @@ export default function BuyerNavigation() {
           </div>
 
           {/* Navigation Items */}
-          <div className="flex items-center lg:gap-2 xl:gap-5 overflow-x-auto w-full justify-end ">
+          <div className="flex items-center lg:gap-0.5 xl:gap-5 overflow-x-auto w-full justify-end ">
             {navItems.map((item) => {
               const isActive = pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   href={item.path}
-                  className={`flex items-center gap-2 px-4 py-3 font-parkinsans font-semibold transition-colors whitespace-nowrap ${
-                    isActive
-                      ? "text-[#A8E959] border-b-2 border-[#A8E959]"
-                      : "text-white hover:text-[#A8E959]"
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-3 font-parkinsans font-semibold transition-colors whitespace-nowrap ${isActive
+                    ? "text-[#A8E959] border-b-2 border-[#A8E959]"
+                    : "text-white hover:text-[#A8E959]"
+                    }`}
                 >
                   {item.icon}
                   <span className="text-sm">{item.name}</span>

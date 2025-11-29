@@ -1,10 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import SectionWrapper from "./SectionWrapper";
 
 export default function WhoWeServe() {
   return (
     <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionWrapper className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center lg:items-start md:justify-between mb-12">
           <div className="mb-6 md:mb-0 md:flex-1 max-w-4xl">
@@ -12,7 +15,7 @@ export default function WhoWeServe() {
               Who do we serve in the Recyclables{" "}
               <span className="text-green-600">Value Chain</span>
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl font-parkinsans">
               We connect buyers and sellers of recyclable materials, providing a
               secure platform for transactions with escrow protection and
               product verification.
@@ -114,7 +117,7 @@ export default function WhoWeServe() {
               <h3 className="text-2xl font-bold text-black mb-3 font-parkinsans">
                 ReePower Buyers
               </h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed font-parkinsans">
                 Access verified sellers and secure transactions with escrow
                 protection. Get real-time updates on available recyclables near
                 you.
@@ -142,7 +145,7 @@ export default function WhoWeServe() {
               <h3 className="text-2xl font-bold text-black mb-3 font-parkinsans">
                 ReePower Sellers
               </h3>
-              <p className="text-gray-700 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed font-parkinsans">
                 List your recyclables with transparent pricing. Receive offers
                 from verified buyers and get paid securely through escrow.
               </p>
@@ -155,7 +158,7 @@ export default function WhoWeServe() {
             </div>
           </div>
         </div>
-      </div>
+      </SectionWrapper>
     </section>
   );
 }

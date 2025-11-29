@@ -21,11 +21,11 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             priority
           />
           {/* Overlay Content */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 lg:p-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 lg:mb-4 font-parkinsans">
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-6 lg:px-10 xl:py-56 xl:pl-36 ">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-3 lg:mb-4 font-parkinsans max-w-3xl">
               Powering the Future of Informal Waste Recycling
             </h2>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white/90 font-parkinsans">
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white/90 font-parkinsans max-w-3xl">
               Reepower is your all-in-one platform for buying and selling
               recyclable materials across Nigeria&apos;s informal waste market.
             </p>
@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         </div>
 
         {/* Right Section - Form */}
-        <div className="w-full lg:w-1/2 bg-white flex flex-col">
+        <div className="w-full lg:w-1/2 bg-white flex flex-col h-full justify-center items-center lg:pr-8">
           {children}
         </div>
       </div>

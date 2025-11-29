@@ -33,7 +33,7 @@ export default function BuyerHeader() {
     },
     {
       name: "Buyer's Marketplace",
-      path: "/buyers/marketplace",
+      path: "/buyers",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ export default function BuyerHeader() {
   return (
     <>
       <header className="w-full bg-[#F5F5F5] shadow-sm">
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
           <div className="flex items-center justify-between gap-4 py-2 lg:py-3">
             {/* Mobile Menu Button */}
             <button
@@ -315,9 +315,8 @@ export default function BuyerHeader() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-[#144E26] shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-80 bg-[#144E26] shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
@@ -392,11 +391,10 @@ export default function BuyerHeader() {
                     key={item.path}
                     href={item.path}
                     onClick={() => setIsSidebarOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-parkinsans font-semibold transition-colors ${
-                      isActive
-                        ? "bg-[#A8E959] text-[#144E42]"
-                        : "text-white hover:bg-[#1a5c32]"
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-parkinsans font-semibold transition-colors ${isActive
+                      ? "bg-[#A8E959] text-[#144E42]"
+                      : "text-white hover:bg-[#1a5c32]"
+                      }`}
                   >
                     {item.icon}
                     <span className="text-sm">{item.name}</span>

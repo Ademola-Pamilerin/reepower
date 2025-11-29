@@ -3,8 +3,21 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#144E42] py-12 sm:py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="w-full bg-[#144E42] py-12 sm:py-16 relative overflow-hidden">
+      {/* Background Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+        <div className="flex flex-row items-center gap-6">
+          <Image
+            src="/images/logo.png"
+            alt="ReePower"
+            width={200}
+            height={200}
+            className="object-contain"
+          />
+          <span className="text-8xl font-bold font-parkinsans text-white">ReePower</span>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
           {/* Logo and Copyright */}
           <div className="md:col-span-3">

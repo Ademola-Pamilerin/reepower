@@ -1,10 +1,5 @@
-import BuyerLayout from "../components/buyer/BuyerLayout";
-import BuyerContentFile from "../components/buyer/buyerMain";
+import BuyerContentFile from "../components/buyer/shared/buyerMain";
 
 export default function BuyersPage() {
-  return (
-    <BuyerLayout>
-      <BuyerContentFile />
-    </BuyerLayout>
-  );
+  return <BuyerContentFile />;
 }

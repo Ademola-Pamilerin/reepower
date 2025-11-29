@@ -1,13 +1,16 @@
 "use client";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import AuthForm from "./AuthForm";
+import AuthForm, { userType } from "./AuthForm";
+
+let USER_TYPE = userType.buyer;
 
 const BuyerAuth = () => {
   const pathname = usePathname();
   const [isLogin, setIsLogin] = useState(pathname !== "/signup");
-  const [userType, setUserType] = useState<"seller" | "buyer" | null>(null);
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,41 +21,18 @@ const BuyerAuth = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userType) {
-      alert("Please select whether you are a Seller or Buyer");
-      return;
-    }
 
-    if (isLogin) {
-      // Handle login
-      console.log("Login:", { ...formData, userType });
-      // Redirect based on user type
-      if (userType === "seller") {
-        window.location.href = "/sellers";
-      } else {
-        window.location.href = "/buyers";
-      }
-    } else {
-      // Handle signup
-      if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
-      console.log("Signup:", { ...formData, userType });
-      // Redirect based on user type
-      if (userType === "seller") {
-        window.location.href = "/sellers";
-      } else {
-        window.location.href = "/buyers";
-      }
-    }
+    console.log("Login:", { ...formData, USER_TYPE });
+    // Redirect based on user type
+
+    router.replace("/buyers");
   };
 
   return (
     <>
       <AuthForm
         isLogin={isLogin}
-        userType={userType}
+        userType={USER_TYPE}
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}

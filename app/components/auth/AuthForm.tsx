@@ -1,9 +1,14 @@
 import { useState } from "react";
 import FormInput from "./inputs/FormInput";
 
+export enum userType {
+  seller = "seller",
+  buyer = "buyer",
+}
+
 interface AuthFormProps {
   isLogin: boolean;
-  userType: "seller" | "buyer" | null;
+  userType: userType;
   formData: {
     email: string;
     password: string;
@@ -11,17 +16,25 @@ interface AuthFormProps {
     fullName: string;
     phone: string;
   };
-  setFormData: React.Dispatch<React.SetStateAction<{
-    email: string;
-    password: string;
-    confirmPassword: string;
-    fullName: string;
-    phone: string;
-  }>>;
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      email: string;
+      password: string;
+      confirmPassword: string;
+      fullName: string;
+      phone: string;
+    }>
+  >;
   onSubmit: (e: React.FormEvent) => void;
 }
 
-export default function AuthForm({ isLogin, userType, formData, setFormData, onSubmit }: AuthFormProps) {
+export default function AuthForm({
+  isLogin,
+  userType,
+  formData,
+  setFormData,
+  onSubmit,
+}: AuthFormProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +45,11 @@ export default function AuthForm({ isLogin, userType, formData, setFormData, onS
   };
 
   return (
-    <form id="auth-form" onSubmit={onSubmit} className="space-y-4 animate-fade-in">
+    <form
+      id="auth-form"
+      onSubmit={onSubmit}
+      className="space-y-4 animate-fade-in"
+    >
       {!isLogin && (
         <FormInput
           label="Full Name"
@@ -47,7 +64,11 @@ export default function AuthForm({ isLogin, userType, formData, setFormData, onS
       )}
 
       <FormInput
-        label={userType === "seller" ? "Business Phone Number or Email" : "Phone Number or Email"}
+        label={
+          userType === "seller"
+            ? "Business Phone Number or Email"
+            : "Phone Number or Email"
+        }
         type="email"
         id="email"
         name="email"
@@ -152,7 +173,10 @@ export default function AuthForm({ isLogin, userType, formData, setFormData, onS
         disabled={
           !formData.email ||
           !formData.password ||
-          (!isLogin && (!formData.fullName || !formData.phone || !formData.confirmPassword))
+          (!isLogin &&
+            (!formData.fullName ||
+              !formData.phone ||
+              !formData.confirmPassword))
         }
         className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >

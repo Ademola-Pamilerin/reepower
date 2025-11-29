@@ -1,4 +1,4 @@
-export { default as BuyerLayout } from "./BuyerLayout";
-export { default as BuyerHeader } from "./BuyerHeader";
-export { default as BuyerNavigation } from "./BuyerNavigation";
-export { default as ProductDetailModal } from "./ProductDetailModal";
+export { default as BuyerLayout } from "./layout/BuyerLayout";
+export { default as BuyerHeader } from "./layout/BuyerHeader";
+export { default as BuyerNavigation } from "./layout/BuyerNavigation";
+export { default as ProductDetailModal } from "./shared/ProductDetailModal";

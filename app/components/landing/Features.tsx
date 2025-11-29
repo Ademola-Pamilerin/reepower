@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import SectionWrapper from "./SectionWrapper";
 
 export default function Features() {
   const features = [
@@ -22,7 +25,7 @@ export default function Features() {
 
   return (
     <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionWrapper className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Image */}
           <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
@@ -36,15 +39,17 @@ export default function Features() {
 
           {/* Right Column - Text and Features */}
           <div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-black leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-black leading-tight font-parkinsans">
               Why we are a leading{" "}
-              <span className="text-green-600">commercial waste service provider</span>
+              <span className="text-green-600">
+                commercial waste service provider
+              </span>
             </h2>
 
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              We&apos;ve built ReePower with informal recyclers, agents, and buyers
-              in mind. From escrow-secured payments to real-time offers, our
-              system puts you in control of your trade.
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed font-parkinsans">
+              We&apos;ve built ReePower with informal recyclers, agents, and
+              buyers in mind. From escrow-secured payments to real-time offers,
+              our system puts you in control of your trade.
             </p>
 
             {/* Feature List */}
@@ -67,17 +72,17 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-black mb-1">
+                    <h3 className="font-bold text-lg text-black mb-1 font-parkinsans">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-700">{feature.description}</p>
+                    <p className="text-gray-700 font-parkinsans">{feature.description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div>
+      </SectionWrapper>
     </section>
   );
 }

@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import SectionWrapper from "./SectionWrapper";
 
 export default function CTABanner() {
   return (
     <section className="w-full bg-[#144E42] py-16 sm:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionWrapper className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         <div className="text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6 font-parkinsans">
             Ready to Start Selling or Buying Recyclables? Join Nigeria&apos;s
@@ -24,7 +27,7 @@ export default function CTABanner() {
             </Link>
           </div>
         </div>
-      </div>
+      </SectionWrapper>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SectionWrapper from "./SectionWrapper";
 
 interface FAQItem {
   id: number;
@@ -50,14 +51,14 @@ export default function FAQ() {
 
   return (
     <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionWrapper className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         {/* Title */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-black leading-tight font-parkinsans">
             Frequently Asked{" "}
             <span className="text-green-600">Questions</span>
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed font-parkinsans">
             Browse materials from verified sellers. Prices are location-based
             and updated in real time. Use escrow to protect your payment until
             you confirm quality.
@@ -120,7 +121,7 @@ export default function FAQ() {
             </div>
           ))}
         </div>
-      </div>
+      </SectionWrapper>
     </section>
   );
 }

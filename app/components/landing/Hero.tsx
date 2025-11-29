@@ -1,9 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] xl:h-[95vh] overflow-hidden">
+    <motion.section
+      className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] xl:h-[95vh] overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+    >
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <Image
@@ -20,7 +28,7 @@ export default function Hero() {
       {/* <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-transparent" /> */}
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 h-full flex items-center">
         <div className="max-w-4xl">
           {/* Main Heading */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -58,6 +66,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

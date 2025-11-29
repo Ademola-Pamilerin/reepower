@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import SectionWrapper from "./SectionWrapper";
 
 interface RecyclableItem {
   id: number;
@@ -68,10 +71,10 @@ export default function RecyclablesGrid({
           </span>
         </div>
         <div className="space-y-2 mb-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 font-parkinsans">
             Weight: <span className="font-semibold">{item.weight}</span>
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 font-parkinsans">
             Price: <span className="font-semibold">{item.price}</span>
           </p>
         </div>
@@ -87,7 +90,7 @@ export default function RecyclablesGrid({
 
   return (
     <section className="w-full bg-white py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <SectionWrapper className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center lg:items-start md:justify-between mb-12">
           <div className="mb-6 md:mb-0 md:flex-1">
@@ -96,7 +99,7 @@ export default function RecyclablesGrid({
               <span className="text-green-600">{titleHighlight}</span>
               {title.split(titleHighlight)[1]}
             </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl">
+            <p className="text-lg text-gray-700 leading-relaxed max-w-2xl font-parkinsans">
               {description}
             </p>
           </div>
@@ -162,7 +165,7 @@ export default function RecyclablesGrid({
             ))}
           </div>
         )}
-      </div>
+      </SectionWrapper>
     </section>
   );
 }

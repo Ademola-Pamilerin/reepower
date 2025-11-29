@@ -337,7 +337,7 @@ const BuyerContentFile = () => {
 
   return (
     <div className="w-full bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
         {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#144E42] font-parkinsans">
@@ -346,7 +346,7 @@ const BuyerContentFile = () => {
         </div>
 
         {/* Buyer Info Section */}
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-8 border border-green-100">
+        {/* <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 mb-8 border border-green-100">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full bg-[#144E42] flex items-center justify-center shrink-0">
@@ -462,7 +462,7 @@ const BuyerContentFile = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Search and Create Button Section */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -491,7 +491,7 @@ const BuyerContentFile = () => {
               </svg>
             </div>
           </div>
-          <button className="px-6 py-3 rounded-lg bg-[#B8EE7D] font-parkinsans font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap text-[#144E42]">
+          <Link href="/buyers/buy-requests/create" className="px-6 py-3 rounded-lg bg-[#B8EE7D] font-parkinsans font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap text-[#144E42]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -507,7 +507,7 @@ const BuyerContentFile = () => {
               />
             </svg>
             Create New Buy Request
-          </button>
+          </Link>
         </div>
 
         {/* Products Grid Section */}
@@ -613,11 +613,10 @@ const BuyerContentFile = () => {
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
-                className={`px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${
-                  currentPage === 1
+                className={`px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${currentPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -643,13 +642,12 @@ const BuyerContentFile = () => {
                     typeof page === "number" && setCurrentPage(page)
                   }
                   disabled={page === "..."}
-                  className={`min-w-[40px] px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${
-                    page === currentPage
+                  className={`min-w-[40px] px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${page === currentPage
                       ? "bg-[#144E42] text-white"
                       : page === "..."
-                      ? "bg-white text-gray-400 cursor-default"
-                      : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                  }`}
+                        ? "bg-white text-gray-400 cursor-default"
+                        : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                    }`}
                 >
                   {page}
                 </button>
@@ -661,11 +659,10 @@ const BuyerContentFile = () => {
                   setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                 }
                 disabled={currentPage === totalPages}
-                className={`px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${
-                  currentPage === totalPages
+                className={`px-3 py-2 rounded-lg font-parkinsans font-semibold transition-colors ${currentPage === totalPages
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
