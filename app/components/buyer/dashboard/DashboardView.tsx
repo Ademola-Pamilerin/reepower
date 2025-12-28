@@ -8,9 +8,12 @@ import EarningsChart from "./EarningsChart";
 import RecentActivity from "./RecentActivity";
 import RecentRequestsTable from "./RecentRequestsTable";
 import OngoingOrdersTable from "./OngoingOrdersTable";
+import { useBuyerDashboard } from "@/hooks/use-buyers";
 
 export default function DashboardView() {
-    // Sample data for the earnings chart
+    const { data, isLoading, error } = useBuyerDashboard();
+
+    // Sample data for the earnings chart (keep this as it's not in the API response)
     const earningsData = [
         { day: "Mon", amount: 4500 },
         { day: "Tue", amount: 6200 },
@@ -21,96 +24,53 @@ export default function DashboardView() {
         { day: "Sun", amount: 7500 },
     ];
 
-    // Sample recent activity data
-    const recentActivity = [
-        {
-            id: 1,
-            type: "request",
-            message: "You just requested 5,000 PET bottles",
-            time: "Just now",
-            icon: "📦",
-        },
-        {
-            id: 2,
-            type: "offer",
-            message: "You've received an offer of ₦50 from Ade Ofiha",
-            time: "3hrs ago",
-            icon: "💰",
-        },
-        {
-            id: 3,
-            type: "order",
-            message: "OmorunoOkieCo finished your order (Bottle for...",
-            time: "3hrs ago",
-            icon: "✅",
-        },
-        {
-            id: 4,
-            type: "policy",
-            message: "Response policy update available",
-            time: "1hr ago",
-            icon: "📋",
-        },
-    ];
+    if (isLoading) {
+        return (
+            <div className="w-full bg-white">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#14841E] mx-auto mb-4"></div>
+                            <p className="text-gray-600 font-parkinsans">Loading dashboard...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-    // Sample recent requests data
-    const recentRequests = [
-        {
-            id: "REQ123",
-            commodityType: "PET Bottles",
-            qty: "50Kg",
-            budget: "NGN 5,000 - NGN 10,000",
-            dateCreated: "23rd June 2025",
-            offers: 5,
-        },
-        {
-            id: "REQ123",
-            commodityType: "PET Bottles",
-            qty: "50Kg",
-            budget: "NGN 5,000 - NGN 10,000",
-            dateCreated: "23rd June 2025",
-            offers: 5,
-        },
-        {
-            id: "REQ123",
-            commodityType: "PET Bottles",
-            qty: "50Kg",
-            budget: "NGN 5,000 - NGN 10,000",
-            dateCreated: "23rd June 2025",
-            offers: 5,
-        },
-    ];
+    if (error) {
+        return (
+            <div className="w-full bg-white">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
+                    <div className="flex items-center justify-center min-h-[400px]">
+                        <div className="text-center">
+                            <div className="text-red-500 text-5xl mb-4">⚠️</div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-2 font-parkinsans">
+                                Error Loading Dashboard
+                            </h3>
+                            <p className="text-gray-600 font-parkinsans">
+                                {error.message || "Failed to load dashboard data"}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-    // Sample ongoing orders data
-    const ongoingOrders = [
-        {
-            id: "REQ123",
-            sellerName: "Oromuno Okiemute",
-            material: "PET Bottles",
-            finalPrice: "NGN 5,000",
-            dateCreated: "23rd June 2025",
-            transType: "Request",
-            qty: "50kg",
-            status: "Active",
-        },
-        {
-            id: "REQ123",
-            sellerName: "Oromuno Okiemute",
-            material: "PET Bottles",
-            finalPrice: "NGN 5,000",
-            dateCreated: "23rd June 2025",
-            transType: "Direct",
-            qty: "50kg",
-            status: "Active",
-        },
-    ];
+    const dashboardData = data?.data;
+    const stats = dashboardData?.stats;
+    const recentActivity = dashboardData?.recent_activity?.filter(item => Object.keys(item).length > 0) || [];
+    const recentRequests = dashboardData?.recent_requests?.filter(item => Object.keys(item).length > 0) || [];
+    const ongoingOrders = dashboardData?.recent_orders?.filter(item => Object.keys(item).length > 0) || [];
 
     return (
         <div className="w-full bg-white">
             <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 py-8">
                 <DashboardHeader />
                 <WalletCard />
-                <StatsCards />
+                <StatsCards stats={stats} />
 
                 {/* Chart and Activity Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">

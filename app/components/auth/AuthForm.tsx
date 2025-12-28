@@ -26,6 +26,7 @@ interface AuthFormProps {
     }>
   >;
   onSubmit: (e: React.FormEvent) => void;
+  isLoading?: boolean;
 }
 
 export default function AuthForm({
@@ -34,6 +35,7 @@ export default function AuthForm({
   formData,
   setFormData,
   onSubmit,
+  isLoading = false,
 }: AuthFormProps) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -176,11 +178,12 @@ export default function AuthForm({
           (!isLogin &&
             (!formData.fullName ||
               !formData.phone ||
-              !formData.confirmPassword))
+              !formData.confirmPassword)) ||
+          isLoading
         }
         className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {isLogin ? "Log In" : "Create Account"}
+        {isLoading ? "Loading..." : isLogin ? "Log In" : "Create Account"}
       </button>
     </form>
   );

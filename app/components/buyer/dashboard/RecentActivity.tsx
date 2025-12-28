@@ -2,11 +2,11 @@ import React from "react";
 import Link from "next/link";
 
 interface Activity {
-    id: number;
-    type: string;
-    message: string;
-    time: string;
-    icon: string;
+    id?: number;
+    type?: string;
+    message?: string;
+    time?: string;
+    icon?: string;
 }
 
 interface RecentActivityProps {

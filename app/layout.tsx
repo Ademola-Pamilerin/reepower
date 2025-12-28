@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { Providers } from "./providers";
 
 const parkinsans = localFont({
   src: [
@@ -44,9 +45,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${parkinsans.variable} antialiased`}>
-        {children}
-        <Toaster richColors position="top-right" />
+        <Providers>
+          {children}
+          <Toaster richColors position="top-right" />
+        </Providers>
       </body>
     </html>
   );
 }
+

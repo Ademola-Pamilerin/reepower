@@ -7,6 +7,7 @@ import FormInput from "./inputs/FormInput";
 import VerificationCodeInput from "./inputs/VerificationCodeInput";
 import Timer from "../shared/Timer";
 import { toast } from "sonner";
+import { useForgotPassword, useVerifyResetToken, useResetPassword } from "@/hooks/use-auth";
 
 export default function ForgotPasswordView() {
   const pathname = usePathname();
@@ -18,6 +19,11 @@ export default function ForgotPasswordView() {
     code: "",
   });
 
+  // React Query hooks
+  const forgotPasswordMutation = useForgotPassword();
+  const verifyResetTokenMutation = useVerifyResetToken();
+  const resetPasswordMutation = useResetPassword();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -28,11 +34,36 @@ export default function ForgotPasswordView() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const sendCode = () => {
-    setCurrentPage(2);
+    const payload = {
+      email: formData.email,
+    };
+
+    forgotPasswordMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Verification code sent to your email!");
+        setCurrentPage(2);
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Failed to send verification code. Please try again.");
+      },
+    });
   };
 
   const verifyCode = () => {
-    setCurrentPage(3);
+    const payload = {
+      email: formData.email,
+      token: formData.code,
+    };
+
+    verifyResetTokenMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Code verified successfully!");
+        setCurrentPage(3);
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Invalid verification code. Please try again.");
+      },
+    });
   };
 
   const resetPasswordAndLogin = () => {
@@ -40,10 +71,37 @@ export default function ForgotPasswordView() {
       toast.error("Passwords do not match");
       return;
     }
+
+    const payload = {
+      email: formData.email,
+      token: formData.code,
+      newPassword: formData.password,
+    };
+
+    resetPasswordMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Password reset successful! Please login with your new password.");
+        navigations.push("/auth");
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Failed to reset password. Please try again.");
+      },
+    });
   };
 
   const handleResend = () => {
-    // TODO: Add resend API call here if needed
+    const payload = {
+      email: formData.email,
+    };
+
+    forgotPasswordMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Verification code resent!");
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Failed to resend code. Please try again.");
+      },
+    });
   };
 
   return (
@@ -67,7 +125,7 @@ export default function ForgotPasswordView() {
           </div>
 
           {/* Sign In As Section */}
-          <div className="mb-8">
+          <div className="mb-8 w-full md:min-w-lg">
             <h1 className="text-xl lg:text-3xl xl:text-4xl font-bold text-[#000000] mb-3 font-parkinsans">
               {currentPage === 1 && "Forgot Password"}
               {currentPage === 2 && "Enter Verification Code"}
@@ -99,11 +157,11 @@ export default function ForgotPasswordView() {
 
                 <button
                   type="submit"
-                  disabled={!formData.email}
+                  disabled={!formData.email || forgotPasswordMutation.isPending}
                   onClick={sendCode}
                   className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Verification Code
+                  {forgotPasswordMutation.isPending ? "Sending..." : "Send Verification Code"}
                 </button>
               </div>
             )}
@@ -125,11 +183,11 @@ export default function ForgotPasswordView() {
 
                 <button
                   type="submit"
-                  disabled={!formData.code || formData.code.length < 6}
+                  disabled={!formData.code || formData.code.length < 6 || verifyResetTokenMutation.isPending}
                   onClick={verifyCode}
                   className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Verify Code
+                  {verifyResetTokenMutation.isPending ? "Verifying..." : "Verify Code"}
                 </button>
 
                 <Timer initialTime={60} onResend={handleResend} />
@@ -162,11 +220,11 @@ export default function ForgotPasswordView() {
 
                 <button
                   type="submit"
-                  disabled={!formData.confirmPassword || !formData.password}
+                  disabled={!formData.confirmPassword || !formData.password || resetPasswordMutation.isPending}
                   onClick={resetPasswordAndLogin}
                   className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Sign In
+                  {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
                 </button>
               </div>
             )}

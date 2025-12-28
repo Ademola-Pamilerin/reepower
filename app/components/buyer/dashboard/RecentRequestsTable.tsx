@@ -2,12 +2,14 @@ import React from "react";
 import Link from "next/link";
 
 interface Request {
-    id: string;
-    commodityType: string;
-    qty: string;
-    budget: string;
-    dateCreated: string;
-    offers: number;
+    id?: string;
+    commodity_type?: string;
+    commodityType?: string;
+    qty?: string;
+    budget?: string;
+    date_created?: string;
+    dateCreated?: string;
+    offers?: number;
 }
 
 interface RecentRequestsTableProps {

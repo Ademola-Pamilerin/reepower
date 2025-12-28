@@ -1,35 +1,29 @@
 import React from "react";
 import Link from "next/link";
 
-interface Order {
-    id?: string;
-    seller_name?: string;
-    sellerName?: string;
-    material?: string;
-    final_price?: string;
-    finalPrice?: string;
-    date_created?: string;
-    dateCreated?: string;
-    trans_type?: string;
-    transType?: string;
-    qty?: string;
-    status?: string;
+interface Offer {
+    headerRequest: string;
+    buyerLocation: string;
+    buyerOffer: string;
+    myOfferPrice: string;
+    indianDeal: string;
+    status: string;
 }
 
-interface OngoingOrdersTableProps {
-    orders: Order[];
+interface RecentOffersTableProps {
+    offers: Offer[];
 }
 
-export default function OngoingOrdersTable({ orders }: OngoingOrdersTableProps) {
+export default function RecentOffersTable({ offers }: RecentOffersTableProps) {
     return (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center justify-between">
                     <h2 className="text-lg font-bold text-black font-parkinsans">
-                        Ongoing Orders
+                        Recent Offers
                     </h2>
                     <Link
-                        href="/buyers/orders"
+                        href="#"
                         className="text-sm text-[#144E42] font-semibold hover:underline"
                     >
                         See All
@@ -41,25 +35,19 @@ export default function OngoingOrdersTable({ orders }: OngoingOrdersTableProps) 
                     <thead className="bg-gray-50">
                         <tr>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Request ID
+                                Header/Request
                             </th>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Seller Name
+                                Buyer's Location
                             </th>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Material
+                                Buyer's Offer
                             </th>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Final Price
+                                My Offer Price
                             </th>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Date Created
-                            </th>
-                            <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Trans Type
-                            </th>
-                            <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
-                                Qty
+                                Indian Deal
                             </th>
                             <th className="px-6 py-3 text-left text-sm font-semibold text-black font-parkinsans">
                                 Status
@@ -70,37 +58,34 @@ export default function OngoingOrdersTable({ orders }: OngoingOrdersTableProps) 
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {orders.map((order, index) => (
+                        {offers.map((offer, index) => (
                             <tr key={index} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.id}
+                                    {offer.headerRequest}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.sellerName}
+                                    {offer.buyerLocation}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.material}
+                                    {offer.buyerOffer}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-black font-parkinsans font-semibold">
-                                    {order.finalPrice}
+                                    {offer.myOfferPrice}
                                 </td>
                                 <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.dateCreated}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.transType}
-                                </td>
-                                <td className="px-6 py-4 text-sm text-black font-parkinsans">
-                                    {order.qty}
+                                    {offer.indianDeal}
                                 </td>
                                 <td className="px-6 py-4 text-sm">
-                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#FFF9C4] text-[#F57F17]">
-                                        {order.status}
+                                    <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                                        {offer.status}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 text-sm">
-                                    <div className="relative group">
-                                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                                    <div className="flex items-center gap-2">
+                                        <button className="px-3 py-1.5 bg-[#144E42] text-white rounded-lg font-parkinsans font-semibold hover:bg-[#1a6350] transition-colors text-xs">
+                                            Edit
+                                        </button>
+                                        <button className="p-1.5 hover:bg-gray-100 rounded transition-colors">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"

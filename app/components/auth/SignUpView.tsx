@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Header from "../layout/Header";
 import AuthLayout from "./AuthLayout";
+import { useRegister, useVerifyEmail, useResendVerification } from "@/hooks/use-auth";
+import { toast } from "sonner";
 
 export default function SignUpView() {
   const [userType, setUserType] = useState<"seller" | "buyer" | null>(null);
@@ -14,6 +16,13 @@ export default function SignUpView() {
   const [startTimer, setStartTimer] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const navigation = useRouter();
+
+  // React Query hooks
+  const registerMutation = useRegister();
+  const verifyEmailMutation = useVerifyEmail();
+  const resendVerificationMutation = useResendVerification();
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -44,8 +53,6 @@ export default function SignUpView() {
       .padStart(2, "0")}`;
   };
 
-  const navigation = useRouter();
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -64,6 +71,65 @@ export default function SignUpView() {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const saveUserToBackend = () => {
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    // Prepare payload according to API specification
+    const payload = {
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+      username: formData.username,
+      user_type: (userType === "seller" ? "seller" : userType === "buyer" ? "buyer" : "individual") as "seller" | "buyer" | "individual",
+      business_name: formData.businessName,
+      phone: formData.phone,
+      state: formData.state,
+      lga: formData.lga,
+      address: formData.address,
+    };
+
+    registerMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Registration successful! Please check your email for verification code.");
+        setCurrentPage(5);
+        setStartTimer(true);
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Registration failed. Please try again.");
+      },
+    });
+  };
+
+  const SubmitCode = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      email: formData.email,
+      token: formData.code,
+    };
+
+    verifyEmailMutation.mutate(payload, {
+      onSuccess: (data) => {
+        toast.success(data.message || "Email verified successfully!");
+        // Navigate to appropriate dashboard based on user type
+        if (userType === "seller") {
+          navigation.push("/sellers");
+        } else if (userType === "buyer") {
+          navigation.push("/buyers");
+        } else {
+          navigation.push("/");
+        }
+      },
+      onError: (error) => {
+        toast.error(error.getFullMessage() || "Verification failed. Please check your code and try again.");
+      },
     });
   };
 
@@ -92,8 +158,8 @@ export default function SignUpView() {
                     ? currentPage === 4
                       ? "Business Information"
                       : currentPage === 5
-                      ? "Verify Your Phone Number"
-                      : "Create an Account"
+                        ? "Verify Your Phone Number"
+                        : "Create an Account"
                     : "What are you registering as"}
                 </h1>
                 <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
@@ -103,7 +169,7 @@ export default function SignUpView() {
 
               <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
                 {currentPage === 5
-                  ? `We've sent a 6-digit verification code to ${formData.phone}. Enter the code below to continue setting up your account.`
+                  ? `We've sent a 6-digit verification code to ${formData.email}. Enter the code below to continue setting up your account.`
                   : `Reepower is your all-in-one platform for buying and selling recyclable materials across Nigeria. `}
                 {currentPage !== 5 && (
                   <button
@@ -369,11 +435,10 @@ export default function SignUpView() {
               <div className="mb-8">
                 <div className="space-y-3 mb-6">
                   <label
-                    className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                      userType === "buyer"
-                        ? "border-[#A8E959] bg-[#A8E959]/10"
-                        : "border-gray-300 hover:border-[#A8E959]"
-                    }`}
+                    className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "buyer"
+                      ? "border-[#A8E959] bg-[#A8E959]/10"
+                      : "border-gray-300 hover:border-[#A8E959]"
+                      }`}
                   >
                     <input
                       type="checkbox"
@@ -388,11 +453,10 @@ export default function SignUpView() {
                     </span>
                   </label>
                   <label
-                    className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                      userType === "seller"
-                        ? "border-[#A8E959] bg-[#A8E959]/10"
-                        : "border-gray-300 hover:border-[#A8E959]"
-                    }`}
+                    className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "seller"
+                      ? "border-[#A8E959] bg-[#A8E959]/10"
+                      : "border-gray-300 hover:border-[#A8E959]"
+                      }`}
                   >
                     <input
                       type="checkbox"
@@ -424,8 +488,7 @@ export default function SignUpView() {
                 id="auth-form"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  setCurrentPage(5);
-                  setStartTimer(true);
+                  saveUserToBackend();
                 }}
                 className="space-y-4 animate-fade-in"
               >
@@ -513,17 +576,20 @@ export default function SignUpView() {
                     !formData.state ||
                     !formData.lga ||
                     !formData.businessName ||
-                    !formData.address
+                    !formData.address ||
+                    registerMutation.isPending
                   }
                   className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Continue
+                  {registerMutation.isPending ? "Creating Account..." : "Continue"}
                 </button>
               </form>
             )}
 
             {currentPage === 5 && (
-              <div className="space-y-3 mb-6">
+              <form
+                onSubmit={SubmitCode}
+                className="space-y-3 mb-6">
                 <div>
                   <label
                     htmlFor="verificationCode"
@@ -579,31 +645,42 @@ export default function SignUpView() {
 
                 <button
                   type="submit"
-                  disabled={!formData.code || formData.code.length < 6}
+                  disabled={!formData.code || formData.code.length < 6 || verifyEmailMutation.isPending}
                   className="w-full py-3 rounded-lg bg-[#A8E959] text-[#144E42] font-parkinsans font-semibold hover:bg-[#A8E959] transition-colors mt-6 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Verify Code
+                  {verifyEmailMutation.isPending ? "Verifying..." : "Verify Code"}
                 </button>
+
 
                 <div className="text-gray-600 font-parkinsans">
                   <button
                     type="button"
-                    disabled={startTimer}
+                    disabled={startTimer || resendVerificationMutation.isPending}
                     onClick={() => {
-                      setTimer(60);
-                      setStartTimer(true);
+                      resendVerificationMutation.mutate(
+                        { email: formData.email },
+                        {
+                          onSuccess: (data) => {
+                            toast.success(data.message || "Verification code resent successfully!");
+                            setTimer(60);
+                            setStartTimer(true);
+                          },
+                          onError: (error) => {
+                            toast.error(error.getFullMessage() || "Failed to resend code. Please try again.");
+                          },
+                        }
+                      );
                     }}
-                    className={`font-medium ${
-                      startTimer
-                        ? "text-gray-400 cursor-not-allowed"
-                        : "text-[#14841E] hover:text-[#14841E] underline cursor-pointer"
-                    }`}
+                    className={`font-medium ${startTimer || resendVerificationMutation.isPending
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-[#14841E] hover:text-[#14841E] underline cursor-pointer"
+                      }`}
                   >
-                    Resend Code
+                    {resendVerificationMutation.isPending ? "Sending..." : "Resend Code"}
                   </button>{" "}
                   {startTimer && `in ${formatTime(timer)} seconds`}
                 </div>
-              </div>
+              </form>
             )}
           </div>
         </div>
