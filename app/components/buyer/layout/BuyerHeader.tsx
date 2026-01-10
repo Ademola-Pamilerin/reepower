@@ -406,7 +406,13 @@ export default function BuyerHeader() {
 
           {/* Sidebar Footer */}
           <div className="p-6 border-t border-[#1a5c32]">
-            <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-parkinsans font-semibold transition-colors">
+            <button
+              onClick={() => {
+                const { logout } = require("@/lib/auth"); // Import dynamically to avoid circular dependencies if any, or just standard import
+                logout();
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-parkinsans font-semibold transition-colors"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

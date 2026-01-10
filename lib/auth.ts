@@ -43,18 +43,34 @@ export function getUserType(): 'buyer' | 'seller' | null {
 /**
  * Clear all authentication data
  */
+import { clearAuthToken } from './cookies';
+
+/**
+ * Clear all authentication data
+ */
 export function clearAuthData(): void {
     if (typeof window === 'undefined') return;
 
+    // Clear localStorage
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_data');
     localStorage.removeItem('user_type');
+
+    // Clear cookies
+    clearAuthToken();
 }
 
 /**
  * Logout user and clear auth data
  */
 export function logout(): void {
+    // // Optional: Call API to invalidate session on server
+    // try {
+    //     fetch('/api/auth/logout', { method: 'POST' });
+    // } catch (error) {
+    //     console.error('Logout API call failed:', error);
+    // }
+
     clearAuthData();
     window.location.href = '/auth';
 }
