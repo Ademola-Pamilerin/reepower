@@ -32,7 +32,7 @@ const parkinsans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ReePower - Turn Waste into Wealth",
+  title: "Arecyl - Turn Waste into Wealth",
   description:
     "Connect with verified buyers and sellers of recyclable materials. Trade smarter, faster, and with confidence — powered by escrow and product verification.",
 };

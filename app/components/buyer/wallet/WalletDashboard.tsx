@@ -41,12 +41,12 @@ export default function WalletDashboard() {
                             <div className="flex flex-row items-center gap-4">
                                 <Image
                                     src="/images/logo.png"
-                                    alt="ReePower"
+                                    alt="Arecyl"
                                     width={120}
                                     height={120}
                                     className="object-contain"
                                 />
-                                <span className="text-5xl font-bold font-parkinsans text-white">ReePower</span>
+                                <span className="text-5xl font-bold font-parkinsans text-white">Arecyl</span>
                             </div>
                         </div>
 

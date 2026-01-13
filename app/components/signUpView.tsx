@@ -75,7 +75,7 @@ export default function SignUpView() {
         <div className="lg:w-1/2 relative h-96 lg:h-screen">
           <Image
             src="/images/auth-image.png"
-            alt="ReePower Auth"
+            alt="Arecyl Auth"
             height={1200}
             width={1200}
             className="object-cover h-full w-full"
@@ -87,7 +87,7 @@ export default function SignUpView() {
               Powering the Future of Informal Waste Recycling
             </h2>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-white/90 font-parkinsans">
-              Reepower is your all-in-one platform for buying and selling
+              Arecyl is your all-in-one platform for buying and selling
               recyclable materials across Nigeria&apos;s informal waste market.
             </p>
           </div>
@@ -118,19 +118,21 @@ export default function SignUpView() {
                       ? currentPage === 4
                         ? "Business Information"
                         : currentPage === 5
-                        ? "Verify Your Phone Number"
-                        : "Create an Account"
+                          ? "Verify Your Phone Number"
+                          : "Create an Account"
                       : "What are you registering as"}
                   </h1>
-                  <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
-                    Step {currentPage} of 4
-                  </span>
+                  {currentPage !== 5 && (
+                    <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
+                      Step {currentPage} of 4
+                    </span>
+                  )}
                 </div>
 
                 <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
                   {currentPage === 5
                     ? `We've sent a 6-digit verification code to ${formData.phone} Enter the code below to continue setting up your account.'`
-                    : `Reepower is your all-in-one platform for buying and selling
+                    : `Arecyl is your all-in-one platform for buying and selling
                   recyclable materials across Nigeria `}
                   {currentPage !== 5 && (
                     <button
@@ -146,7 +148,7 @@ export default function SignUpView() {
               {currentPage === 1 && (
                 <form
                   id="auth-form"
-                  onSubmit={() => {}}
+                  onSubmit={() => { }}
                   className="space-y-4 animate-fade-in"
                 >
                   <div>
@@ -223,7 +225,7 @@ export default function SignUpView() {
               {currentPage === 2 && (
                 <form
                   id="auth-form"
-                  onSubmit={() => {}}
+                  onSubmit={() => { }}
                   className="space-y-4 animate-fade-in"
                 >
                   <div>
@@ -396,11 +398,10 @@ export default function SignUpView() {
                 <div className="mb-8">
                   <div className="space-y-3 mb-6">
                     <label
-                      className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                        userType === "buyer"
-                          ? "border-[#A8E959] bg-[#A8E959]/10"
-                          : "border-gray-300 hover:border-[#A8E959]"
-                      }`}
+                      className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "buyer"
+                        ? "border-[#A8E959] bg-[#A8E959]/10"
+                        : "border-gray-300 hover:border-[#A8E959]"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -415,11 +416,10 @@ export default function SignUpView() {
                       </span>
                     </label>
                     <label
-                      className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                        userType === "seller"
-                          ? "border-[#A8E959] bg-[#A8E959]/10"
-                          : "border-gray-300 hover:border-[#A8E959]"
-                      }`}
+                      className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "seller"
+                        ? "border-[#A8E959] bg-[#A8E959]/10"
+                        : "border-gray-300 hover:border-[#A8E959]"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -449,7 +449,7 @@ export default function SignUpView() {
               {currentPage === 4 && (
                 <form
                   id="auth-form"
-                  onSubmit={() => {}}
+                  onSubmit={() => { }}
                   className="space-y-4 animate-fade-in"
                 >
                   <div className="flex justify-between w-full gap-6">
@@ -561,7 +561,7 @@ export default function SignUpView() {
                     </label>
                     {/* get the values of this input and save in code */}
 
-                    <div className="flex gap-3 w-full justify-between">
+                    <div className="flex gap-2 w-full justify-center max-w-sm mx-auto">
                       {[...Array(6)].map((_, index) => (
                         <input
                           key={index}
@@ -624,11 +624,10 @@ export default function SignUpView() {
                         setStartTimer(true);
                         // TODO: Add resend API call here if needed
                       }}
-                      className={`font-medium ${
-                        startTimer
-                          ? "text-gray-400 cursor-not-allowed"
-                          : "text-[#14841E] hover:text-[#14841E] underline cursor-pointer"
-                      }`}
+                      className={`font-medium ${startTimer
+                        ? "text-gray-400 cursor-not-allowed"
+                        : "text-[#14841E] hover:text-[#14841E] underline cursor-pointer"
+                        }`}
                     >
                       Resend Code
                     </button>{" "}

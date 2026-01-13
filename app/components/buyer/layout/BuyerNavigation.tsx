@@ -117,12 +117,12 @@ export default function BuyerNavigation() {
         <div className="flex flex-row items-center gap-4">
           <Image
             src="/images/logo.png"
-            alt="ReePower"
+            alt="Arecyl"
             width={150}
             height={150}
             className="object-contain"
           />
-          <span className="text-6xl font-bold font-parkinsans text-white">ReePower</span>
+          <span className="text-6xl font-bold font-parkinsans text-white">Arecyl</span>
         </div>
       </div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-10">

@@ -108,14 +108,14 @@ export default function WhoWeServe() {
             <div className="relative w-full h-[300px] sm:h-[400px]">
               <Image
                 src="/images/buyer-image.png"
-                alt="ReePower Buyer"
+                alt="Arecyl Buyer"
                 fill
                 className="object-cover object-[center_30%]"
               />
             </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold text-black mb-3 font-parkinsans">
-                ReePower Buyers
+                Arecyl Buyers
               </h3>
               <p className="text-gray-700 mb-6 leading-relaxed font-parkinsans">
                 Access verified sellers and secure transactions with escrow
@@ -136,14 +136,14 @@ export default function WhoWeServe() {
             <div className="relative w-full h-[300px] sm:h-[400px]">
               <Image
                 src="/images/seller-image.png"
-                alt="ReePower Seller"
+                alt="Arecyl Seller"
                 fill
                 className="object-cover object-[center_30%]"
               />
             </div>
             <div className="p-6">
               <h3 className="text-2xl font-bold text-black mb-3 font-parkinsans">
-                ReePower Sellers
+                Arecyl Sellers
               </h3>
               <p className="text-gray-700 mb-6 leading-relaxed font-parkinsans">
                 List your recyclables with transparent pricing. Receive offers

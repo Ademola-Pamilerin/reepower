@@ -145,14 +145,14 @@ export default function SellerHeader() {
                             <div className="w-10 h-10 rounded flex items-center justify-center">
                                 <Image
                                     src="/images/logo.png"
-                                    alt="ReePower"
+                                    alt="Arecyl"
                                     width={40}
                                     height={80}
                                     className="object-contain w-full h-full"
                                 />
                             </div>
                             <span className="text-xl xl:text-2xl font-bold font-parkinsans text-[#144E42]">
-                                ReePower
+                                Arecyl
                             </span>
                         </Link>
 
@@ -325,14 +325,14 @@ export default function SellerHeader() {
                             <div className="w-10 h-10 rounded flex items-center justify-center bg-white">
                                 <Image
                                     src="/images/logo.png"
-                                    alt="ReePower"
+                                    alt="Arecyl"
                                     width={40}
                                     height={40}
                                     className="object-contain"
                                 />
                             </div>
                             <span className="text-xl font-bold font-parkinsans text-white">
-                                ReePower
+                                Arecyl
                             </span>
                         </div>
                         <button

@@ -31,7 +31,7 @@ export default function Features() {
           <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
             <Image
               src="/images/serviceimage.png"
-              alt="ReePower service providers"
+              alt="Arecyl service providers"
               fill
               className="object-cover"
             />
@@ -47,7 +47,7 @@ export default function Features() {
             </h2>
 
             <p className="text-lg text-gray-700 mb-8 leading-relaxed font-parkinsans">
-              We&apos;ve built ReePower with informal recyclers, agents, and
+              We&apos;ve built Arecyl with informal recyclers, agents, and
               buyers in mind. From escrow-secured payments to real-time offers,
               our system puts you in control of your trade.
             </p>

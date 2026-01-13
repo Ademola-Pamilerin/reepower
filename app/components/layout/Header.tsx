@@ -30,7 +30,7 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
             <div className="w-10 h-10 rounded flex items-center justify-center">
               <Image
                 src="/images/logo.png"
-                alt="ReePower"
+                alt="Arecyl"
                 width={40}
                 height={80}
                 className="object-contain w-full h-full"
@@ -40,7 +40,7 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
               className={`text-xl xl:text-2xl font-bold font-parkinsans ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
                 }`}
             >
-              ReePower
+              Arecyl
             </span>
           </Link>
 
@@ -88,8 +88,8 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
             <Link
               href="/auth"
               className={`px-6 py-4 rounded-lg  bg-inherit text-sm xl:text-base font-parkinsans font-semibold  border  transition-colors ${bgClass === bgClassVal
-                  ? "text-[#A8E959] border-[#A8E959]"
-                  : "text-[#144E42] border-[#144E42]"
+                ? "text-[#A8E959] border-[#A8E959]"
+                : "text-[#144E42] border-[#144E42]"
                 }`}
             >
               Log In
@@ -148,14 +148,14 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
               <div className="w-10 h-10 rounded flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
-                  alt="ReePower"
+                  alt="Arecyl"
                   width={40}
                   height={80}
                   className="object-contain w-full h-full"
                 />
               </div>
               <span className="text-xl font-bold text-white font-parkinsans">
-                ReePower
+                Arecyl
               </span>
             </Link>
             <button

@@ -18,7 +18,7 @@ export default function WalletDetailsModal({ isOpen, onClose }: WalletDetailsMod
     // Fallback data if walletData fields are missing (for development/demo)
     const accountName = walletData?.accountName || "John Doe";
     const accountNumber = walletData?.accountNumber || "1234567890";
-    const bankName = walletData?.bankName || "ReePower Bank";
+    const bankName = walletData?.bankName || "Arecyl Bank";
 
     const handleCopy = () => {
         navigator.clipboard.writeText(accountNumber);

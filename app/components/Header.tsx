@@ -30,18 +30,17 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
             <div className="w-10 h-10 rounded flex items-center justify-center">
               <Image
                 src="/images/logo.png"
-                alt="ReePower"
+                alt="Arecyl"
                 width={40}
                 height={80}
                 className="object-contain w-full h-full"
               />
             </div>
             <span
-              className={`text-xl xl:text-2xl font-bold font-parkinsans ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`text-xl xl:text-2xl font-bold font-parkinsans ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
-              ReePower
+              Arecyl
             </span>
           </Link>
 
@@ -49,41 +48,36 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="/"
-              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
               Home
             </Link>
             <Link
               href="/about"
-              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
               About Us
             </Link>
             <Link
               href="/sellers"
-              className={`hidden xl:block text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`hidden xl:block text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
               Seller&apos;s Marketplace
             </Link>
             <Link
               href="/buyers"
-              className={`hidden xl:block text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`hidden xl:block text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
               Buyer&apos;s Marketplace
             </Link>
             <Link
               href="/faqs"
-              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${
-                bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
-              }`}
+              className={`text-sm xl:text-base font-parkinsans font-semibold hover:text-green-400 transition-colors ${bgClass === bgClassVal ? "text-white" : "text-[#144E42]"
+                }`}
             >
               FAQs
             </Link>
@@ -93,19 +87,17 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/auth"
-              className={`px-6 py-4 rounded-lg  bg-inherit text-sm xl:text-base font-parkinsans font-semibold  border  transition-colors ${
-                bgClass === bgClassVal
+              className={`px-6 py-4 rounded-lg  bg-inherit text-sm xl:text-base font-parkinsans font-semibold  border  transition-colors ${bgClass === bgClassVal
                   ? "text-[#A8E959] border-[#A8E959]"
                   : "text-[#144E42] border-[#144E42]"
-              }`}
+                }`}
             >
               Log In
             </Link>
             <Link
               href="/signup"
-              className={`px-6 py-4 rounded-lg text-sm xl:text-base font-parkinsans font-semibold text-[#144E42] bg-[#A8E959]  transition-colors ${
-                bgClass === bgClassVal ? " border " : "border-none"
-              }`}
+              className={`px-6 py-4 rounded-lg text-sm xl:text-base font-parkinsans font-semibold text-[#144E42] bg-[#A8E959]  transition-colors ${bgClass === bgClassVal ? " border " : "border-none"
+                }`}
             >
               Create an Account
             </Link>
@@ -118,19 +110,16 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
             aria-label="Toggle menu"
           >
             <span
-              className={`block h-0.5 w-6 transition-all duration-300 ${
-                bgClass === bgClassVal ? "bg-white" : "bg-black/40"
-              } ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+              className={`block h-0.5 w-6 transition-all duration-300 ${bgClass === bgClassVal ? "bg-white" : "bg-black/40"
+                } ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
             />
             <span
-              className={`block h-0.5 w-6  transition-all duration-300 ${
-                bgClass === bgClassVal ? "bg-white" : "bg-black/40"
-              } ${isMenuOpen ? "opacity-0" : ""}`}
+              className={`block h-0.5 w-6  transition-all duration-300 ${bgClass === bgClassVal ? "bg-white" : "bg-black/40"
+                } ${isMenuOpen ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-0.5 w-6  transition-all duration-300 ${
-                bgClass === bgClassVal ? "bg-white" : "bg-black/40"
-              } ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              className={`block h-0.5 w-6  transition-all duration-300 ${bgClass === bgClassVal ? "bg-white" : "bg-black/40"
+                } ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
             />
           </button>
         </div>
@@ -138,17 +127,15 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${
-          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={closeMenu}
       />
 
       {/* Mobile Menu Slide-in */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-[#144E42] z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-[#144E42] z-50 transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full p-6">
           {/* Mobile Menu Header */}
@@ -161,14 +148,14 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
               <div className="w-10 h-10 rounded flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
-                  alt="ReePower"
+                  alt="Arecyl"
                   width={40}
                   height={80}
                   className="object-contain w-full h-full"
                 />
               </div>
               <span className="text-xl font-bold text-white font-parkinsans">
-                ReePower
+                Arecyl
               </span>
             </Link>
             <button

@@ -162,15 +162,17 @@ export default function SignUpView() {
                         : "Create an Account"
                     : "What are you registering as"}
                 </h1>
-                <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
-                  Step {currentPage} of 4
-                </span>
+                {currentPage !== 5 && (
+                  <span className="text-sm lg:text-lg px-2 py-2 text-black/40 bg-[#41C44D1F] font-semibold">
+                    Step {currentPage} of 4
+                  </span>
+                )}
               </div>
 
               <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
                 {currentPage === 5
                   ? `We've sent a 6-digit verification code to ${formData.email}. Enter the code below to continue setting up your account.`
-                  : `Reepower is your all-in-one platform for buying and selling recyclable materials across Nigeria. `}
+                  : `Arecyl is your all-in-one platform for buying and selling recyclable materials across Nigeria. `}
                 {currentPage !== 5 && (
                   <button
                     onClick={() => navigation.push("/auth")}
@@ -598,7 +600,7 @@ export default function SignUpView() {
                     Verification Code
                   </label>
 
-                  <div className="flex gap-3 w-full justify-between">
+                  <div className="flex gap-2 w-full justify-center max-w-sm mx-auto">
                     {[...Array(6)].map((_, index) => (
                       <input
                         key={index}

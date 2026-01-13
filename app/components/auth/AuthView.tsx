@@ -17,7 +17,7 @@ export default function AuthView() {
 
   return (
     <AuthLayout>
-      
+
       {/* Form Content */}
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-lg">
@@ -45,7 +45,7 @@ export default function AuthView() {
               )}
             </h1>
             <p className="text-gray-600 font-parkinsans mb-6 text-sm lg:text-base">
-              Reepower is your all-in-one platform for buying and selling
+              Arecyl is your all-in-one platform for buying and selling
               recyclable materials across Nigeria&apos;s.{" "}
               <button
                 onClick={() => navigation.push("/signup")}
@@ -59,11 +59,10 @@ export default function AuthView() {
             {currentPage === 1 && (
               <div className="space-y-3 mb-6">
                 <label
-                  className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    userType === "buyer"
+                  className={`flex flex-row-reverse justify-between items-center p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "buyer"
                       ? "border-[#A8E959] bg-[#A8E959]/10"
                       : "border-gray-300 hover:border-[#A8E959]"
-                  }`}
+                    }`}
                 >
                   <input
                     type="checkbox"
@@ -78,11 +77,10 @@ export default function AuthView() {
                   </span>
                 </label>
                 <label
-                  className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    userType === "seller"
+                  className={`flex items-center flex-row-reverse justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors ${userType === "seller"
                       ? "border-[#A8E959] bg-[#A8E959]/10"
                       : "border-gray-300 hover:border-[#A8E959]"
-                  }`}
+                    }`}
                 >
                   <input
                     type="checkbox"

@@ -12,14 +12,14 @@ export default function Footer() {
               <div className="w-10 h-10 rounded flex items-center justify-center">
                 <Image
                   src="/images/logo.png"
-                  alt="ReePower"
+                  alt="Arecyl"
                   width={40}
                   height={80}
                   className="object-contain w-full h-full"
                 />
               </div>
               <span className="text-2xl font-bold text-white font-parkinsans">
-                ReePower
+                Arecyl
               </span>
             </Link>
           </div>
@@ -142,7 +142,7 @@ export default function Footer() {
 
         {/* Social Media Icons */}
         <div className="flex justify-between border-t border-green-700 flex-wrap mt-8 items-center py-5">
-          <p className="text-white text-sm font-parkinsans">© ReePower 2025</p>
+          <p className="text-white text-sm font-parkinsans">© Arecyl 2025</p>
           <div className="flex flex-wrap justify-center md:justify-end gap-4">
             <a
               href="https://facebook.com"

@@ -244,7 +244,7 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
                             <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 space-y-4">
                                 <div className="flex justify-between items-center">
                                     <span className="text-gray-500 font-parkinsans">Bank Name</span>
-                                    <span className="font-bold text-[#144E42] font-parkinsans">ReePower Bank</span>
+                                    <span className="font-bold text-[#144E42] font-parkinsans">Arecyl Bank</span>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-gray-500 font-parkinsans">Account Number</span>
@@ -272,7 +272,7 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <span className="text-gray-500 font-parkinsans">Account Name</span>
-                                    <span className="font-bold text-[#144E42] font-parkinsans">ReePower Wallet Funding</span>
+                                    <span className="font-bold text-[#144E42] font-parkinsans">Arecyl Wallet Funding</span>
                                 </div>
                             </div>
 

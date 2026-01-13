@@ -14,9 +14,9 @@ export default function FAQ() {
   const faqItems: FAQItem[] = [
     {
       id: 1,
-      question: "How does ReePower protect my money during a transaction?",
+      question: "How does Arecyl protect my money during a transaction?",
       answer:
-        "We use an escrow system. When a buyer pays for materials, the money is held safely by ReePower until the buyer verifies that the material quality.",
+        "We use an escrow system. When a buyer pays for materials, the money is held safely by Arecyl until the buyer verifies that the material quality.",
     },
     {
       id: 2,
