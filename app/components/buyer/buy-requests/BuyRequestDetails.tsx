@@ -3,38 +3,53 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import EmptyInterestedSellers from "./EmptyInterestedSellers";
 import InterestedSellersList, { Seller } from "./InterestedSellersList";
 import AcceptOfferModal from "../shared/AcceptOfferModal";
 import SellerProfile from "../shared/SellerProfile";
-import { useBuyRequests } from "../../../context/BuyRequestsContext";
+import { useBuyRequest } from "@/hooks/use-buyers";
 
 export default function BuyRequestDetails({ id = "12345" }: { id?: string }) {
     const router = useRouter();
-    const { getRequest } = useBuyRequests();
-    const request = getRequest(id);
+    const { data: requestResponse, isLoading, error } = useBuyRequest(id);
+    const request = requestResponse?.data;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSeller, setSelectedSeller] = useState<Seller | null>(null);
     const [viewingProfileSeller, setViewingProfileSeller] = useState<Seller | null>(null);
 
-    if (!request) {
-        return <div className="p-8 text-center">Request not found</div>;
+    // Map API data to component structure
+    const requestData = useMemo(() => {
+        if (!request) return null;
+
+        // Handle potentially different property names from API vs what context had
+        const r = request as any;
+
+        return {
+            id: r.request_id || r.id || id,
+            materialType: r.material_type || r.materialType,
+            quantity: `${r.qty_needed || r.quantity_needed || r.quantity || 0}kg`,
+            location: r.preferred_location || r.location,
+            priceRange: `₦${Number(r.min_price_per_kg || r.priceMin || 0).toLocaleString()} - ₦${Number(r.max_price_per_kg || r.priceMax || 0).toLocaleString()}`,
+            preferredQuantity: `${r.preferred_quantity || r.preferredQuantity || 0}kg`,
+            dateCreated: r.created_at ? new Date(r.created_at).toLocaleDateString() : (r.dateCreated || new Date().toLocaleDateString()),
+            note: r.description,
+            image: r.image || "/images/pet-bottles.jpg"
+        };
+    }, [request, id]);
+
+    if (isLoading) {
+        return (
+            <div className="w-full min-h-screen flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-[#144E42] border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
     }
 
-    // Map context data to component structure
-    const requestData = {
-        id: request.id,
-        materialType: request.materialType,
-        quantity: `${request.quantity}kg`,
-        location: request.location,
-        priceRange: `₦${Number(request.priceMin).toLocaleString()} - ₦${Number(request.priceMax).toLocaleString()}`,
-        preferredQuality: request.description, // Using description as preferred quality for now
-        dateCreated: request.dateCreated,
-        note: request.description,
-        image: request.images[0] || "/images/pet-bottles.jpg"
-    };
+    if (error || !requestData) {
+        return <div className="p-8 text-center">Request not found or error loading data</div>;
+    }
 
     const dummySellers: Seller[] = [
         {
@@ -108,7 +123,7 @@ export default function BuyRequestDetails({ id = "12345" }: { id?: string }) {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                     <h1 className="text-2xl md:text-3xl font-bold text-black font-parkinsans">
-                        Buy Request #{id}
+                        Buy Request #{requestData?.id || id}
                     </h1>
                     <div className="flex items-center gap-2">
                         <button
@@ -153,6 +168,7 @@ export default function BuyRequestDetails({ id = "12345" }: { id?: string }) {
                                         alt={requestData.materialType}
                                         fill
                                         className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     />
                                 </div>
 
@@ -192,10 +208,10 @@ export default function BuyRequestDetails({ id = "12345" }: { id?: string }) {
                                     <div className="border-t border-gray-100 pt-4 space-y-3 text-sm">
                                         <div className="flex justify-between">
                                             <span className="text-gray-500 font-medium">
-                                                Preferred Quality
+                                                Preferred Quantity
                                             </span>
                                             <span className="text-black font-medium">
-                                                {requestData.preferredQuality}
+                                                {requestData.preferredQuantity}
                                             </span>
                                         </div>
                                         <div className="flex justify-between">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { logout } from "@/lib/auth";
 
 export default function SellerHeader() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -408,7 +409,6 @@ export default function SellerHeader() {
                     <div className="p-6 border-t border-[#1a5c32]">
                         <button
                             onClick={() => {
-                                const { logout } = require("@/lib/auth");
                                 logout();
                             }}
                             className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-parkinsans font-semibold transition-colors"

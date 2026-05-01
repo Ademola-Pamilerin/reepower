@@ -1,11 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useWalletBanks } from "@/hooks/use-wallet";
+import { toast } from "sonner";
 
 export interface Transaction {
     id: string;
     type: "credit" | "debit";
-    amount: number;
+    amount: number; 
     description: string;
     date: string;
     status: "completed" | "pending" | "failed";
@@ -36,7 +38,27 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const [hasWallet, setHasWallet] = useState(false);
     const [walletData, setWalletData] = useState<WalletData | null>(null);
 
+    const { data: walletApiData, isLoading, isError } = useWalletBanks();
+
+    useEffect(() => {
+        if (walletApiData && walletApiData.success && walletApiData.data) {
+            setWalletData({
+                balance: Number(walletApiData.data.balance || 0),
+                accountNumber: walletApiData.data.account_number,
+                accountName: walletApiData.data.account_name,
+                bankName: walletApiData.data.bank_name,
+                transactions: [], 
+                email: "", 
+                phoneNumber: "",
+                bvn: "",
+            });
+            setHasWallet(true);
+        }
+    }, [walletApiData]);
+
     const createWallet = (data: Omit<WalletData, "balance" | "transactions">) => {
+        // This is now handled by the hook in WalletCreationForm, 
+        // but we keep it to update context state if needed
         setWalletData({
             ...data,
             balance: 0,

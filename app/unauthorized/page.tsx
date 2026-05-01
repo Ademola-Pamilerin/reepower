@@ -26,7 +26,7 @@ function UnauthorizedContent() {
     }, [router]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#A8E959]/10 to-[#14841E]/10">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
             <div className="max-w-md w-full mx-4">
                 <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
                     {/* Icon */}

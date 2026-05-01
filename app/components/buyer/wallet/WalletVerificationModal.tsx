@@ -123,30 +123,30 @@ export default function WalletVerificationModal({
             <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-md p-8 transform transition-all scale-100 text-center">
                 {step === "email-sent" && (
                     <div className="space-y-6 py-4">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth={1.5}
                                 stroke="currentColor"
-                                className="w-8 h-8 text-green-600"
+                                className="w-8 h-8 text-blue-600"
                             >
                                 <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                                    d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
                                 />
                             </svg>
                         </div>
 
                         <div>
                             <h3 className="text-xl font-bold text-gray-900 mb-2 font-parkinsans">
-                                Code Sent to Email
+                                Code Sent to Phone
                             </h3>
                             <p className="text-gray-500">
-                                We've sent a verification code to your email address. Please check your
-                                inbox.
+                                We've sent a verification code to your phone number ending with {phoneNumber.slice(-4)}. Please check your
+                                messages.
                             </p>
                         </div>
 

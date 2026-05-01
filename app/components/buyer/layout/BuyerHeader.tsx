@@ -3,12 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-auth";
+import { logout } from "@/lib/auth";
 
 export default function BuyerHeader() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: userData } = useCurrentUser();
 
   const navItems = [
     {
@@ -239,38 +244,77 @@ export default function BuyerHeader() {
               </button>
 
               {/* User Profile */}
-              <button className="flex items-center px-3 md:px-5 py-[15px] rounded-xl bg-[#FFFFFF] transition-colors gap-2 md:gap-4">
-                <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#144E42] flex items-center justify-center">
+              {/* User Profile */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                  className="flex items-center px-3 md:px-5 py-[15px] rounded-xl bg-[#FFFFFF] transition-colors gap-2 md:gap-4 hover:shadow-md"
+                >
+                  <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#144E42] flex items-center justify-center text-white font-bold text-xs md:text-sm">
+                    {userData?.user ? (
+                      (userData.user.username || userData.user.name || "U").substring(0, 2).toUpperCase()
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-4 h-4 md:w-5 md:h-5 text-white"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                  {/* Username removed as per request */
+                  }
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 h-4 md:w-5 md:h-5 text-white"
+                    className={`hidden md:block w-4 h-4 text-[#144E42] transition-transform duration-200 ${isProfileMenuOpen ? "rotate-180" : ""}`}
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                      d="M19.5 8.25l-7.5 7.5-7.5-7.5"
                     />
                   </svg>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="hidden md:block w-4 h-4 text-[#144E42]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm text-gray-500">Active User</p>
+                      <p className="text-sm font-bold text-[#144E42] truncate">
+                        {userData?.user?.name || "Guest User"}
+                      </p>
+                      <p className="text-xs text-gray-400 truncate">
+                        {userData?.user?.email || ""}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        logout();
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                      </svg>
+                      <span className="font-medium">Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -408,7 +452,6 @@ export default function BuyerHeader() {
           <div className="p-6 border-t border-[#1a5c32]">
             <button
               onClick={() => {
-                const { logout } = require("@/lib/auth"); // Import dynamically to avoid circular dependencies if any, or just standard import
                 logout();
               }}
               className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-parkinsans font-semibold transition-colors"

@@ -51,10 +51,8 @@ import { clearAuthToken } from './cookies';
 export function clearAuthData(): void {
     if (typeof window === 'undefined') return;
 
-    // Clear localStorage
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_data');
-    localStorage.removeItem('user_type');
+    // Clear all localStorage data
+    localStorage.clear();
 
     // Clear cookies
     clearAuthToken();

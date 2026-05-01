@@ -158,7 +158,7 @@ export default function SignUpView() {
                     ? currentPage === 4
                       ? "Business Information"
                       : currentPage === 5
-                        ? "Verify Your Phone Number"
+                        ? "Verify Your Email Address"
                         : "Create an Account"
                     : "What are you registering as"}
                 </h1>

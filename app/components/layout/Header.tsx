@@ -3,6 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useCurrentUser } from "@/hooks/use-auth";
+
+const getInitials = (name: string) => {
+  if (!name) return "U";
+  return name.substring(0, 2).toUpperCase();
+};
 
 type HeaderProps = {
   bgClass?: string;
@@ -12,6 +18,8 @@ const bgClassVal = "bg-[#144E42]";
 
 export default function Header({ bgClass = bgClassVal }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const { data: userData } = useCurrentUser();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -83,24 +91,70 @@ export default function Header({ bgClass = bgClassVal }: HeaderProps) {
             </Link>
           </div>
 
-          {/* Desktop Action Buttons */}
+          {/* Desktop Action Buttons / User Profile */}
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/auth"
-              className={`px-6 py-4 rounded-lg  bg-inherit text-sm xl:text-base font-parkinsans font-semibold  border  transition-colors ${bgClass === bgClassVal
-                ? "text-[#A8E959] border-[#A8E959]"
-                : "text-[#144E42] border-[#144E42]"
-                }`}
-            >
-              Log In
-            </Link>
-            <Link
-              href="/signup"
-              className={`px-6 py-4 rounded-lg text-sm xl:text-base font-parkinsans font-semibold text-[#144E42] bg-[#A8E959]  transition-colors ${bgClass === bgClassVal ? " border " : "border-none"
-                }`}
-            >
-              Create an Account
-            </Link>
+            {userData?.user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                  className="flex items-center gap-3 focus:outline-none"
+                >
+                  <div className="flex flex-col items-end">
+                    <span className="text-sm font-bold font-parkinsans text-[#144E42] bg-white/80 px-2 rounded-md">
+                      {userData.user.username || userData.user.name.split(' ')[0]}
+                    </span>
+                  </div>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg border-2 border-white shadow-sm ${bgClass === bgClassVal ? "bg-[#A8E959] text-[#144E42]" : "bg-[#144E42] text-white"
+                    }`}>
+                    {getInitials(userData.user.username || userData.user.name)}
+                  </div>
+                </button>
+
+                {/* Dropdown Menu */}
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm text-gray-500">Active User</p>
+                      <p className="text-sm font-bold text-[#144E42] truncate">
+                        {userData.user.name}
+                      </p>
+                      <p className="text-xs text-gray-400 truncate">
+                        {userData.user.email}
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem('auth_token');
+                        window.location.href = '/auth';
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                    >
+                      <span className="font-medium">Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/auth"
+                  className={`px-6 py-4 rounded-lg  bg-inherit text-sm xl:text-base font-parkinsans font-semibold  border  transition-colors ${bgClass === bgClassVal
+                    ? "text-[#A8E959] border-[#A8E959]"
+                    : "text-[#144E42] border-[#144E42]"
+                    }`}
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/signup"
+                  className={`px-6 py-4 rounded-lg text-sm xl:text-base font-parkinsans font-semibold text-[#144E42] bg-[#A8E959]  transition-colors ${bgClass === bgClassVal ? " border " : "border-none"
+                    }`}
+                >
+                  Create an Account
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}

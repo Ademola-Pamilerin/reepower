@@ -20,6 +20,8 @@ interface ProductDetailModalProps {
     sellType: string;
     description: string;
     availableWeight: number;
+    minPrice?: string | number;
+    maxPrice?: string | number;
   } | null;
   isOpen: boolean;
   onClose: () => void;
@@ -41,6 +43,13 @@ export default function ProductDetailModal({
 }: ProductDetailModalProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    if (product) {
+      setQuantity(1);
+      setTotalPrice(product.pricePerKg);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (product) setTotalPrice(quantity * product.pricePerKg);
@@ -110,7 +119,7 @@ export default function ProductDetailModal({
 
               <div className="flex flex-col lg:flex-row w-full items-center justify-center md:px-4 py-10 h-full">
                 <div className="w-full lg:w-2/5 relative h-full items-start flex flex-col px-4 justify-between">
-                  <div className="relative w-full flex-1 h-[20vh] md:h-[30vh] lg:max-h-80 xl:max-h-96 bg-gray-100 rounded-lg overflow-hidden">
+                  <div className="relative w-full aspect-square md:aspect-video lg:h-full lg:max-h-[500px] bg-gray-100 rounded-xl overflow-hidden shadow-inner">
                     <Image
                       src={product.image}
                       alt={product.type}
@@ -118,24 +127,6 @@ export default function ProductDetailModal({
                       className="object-cover"
                       priority
                     />
-                  </div>
-
-                  <div className="flex items-center justify-between py-3 w-full bg-white">
-                    <button
-                      className="p-1 md:p-2.5 rounded-full border border-gray-600 text-green-600 cursor-pointer shadow"
-                      aria-label="Previous image"
-                    >
-                      <IoArrowBack size={20} />
-                    </button>
-
-                    <p className="text-[#424242]">1 of 4</p>
-
-                    <button
-                      className="p-1 md:p-2.5 rounded-full border border-gray-600 text-green-600 cursor-pointer shadow"
-                      aria-label="Next image"
-                    >
-                      <IoArrowForward size={20} />
-                    </button>
                   </div>
                 </div>
 
@@ -180,8 +171,8 @@ export default function ProductDetailModal({
                     <h3 className="text-base md:text-lg font-bold text-[#144E42] mb-1 font-parkinsans">
                       Product Description
                     </h3>
-                    <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                      {product.description.slice(0, 100)}
+                    <p className="text-sm md:text-base text-gray-700 leading-relaxed overflow-y-auto max-h-32 lg:max-h-none">
+                      {product.description}
                     </p>
                   </div>
 
@@ -196,12 +187,25 @@ export default function ProductDetailModal({
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xl md:text-3xl font-bold text-[#144E42] font-parkinsans">
-                          ₦{product.pricePerKg}/kg
-                        </p>
-                        <p className="text-xs md:text-sm text-gray-600">
-                          Price per kg
-                        </p>
+                        {product.minPrice && product.maxPrice ? (
+                          <>
+                            <p className="text-xl md:text-3xl font-bold text-[#144E42] font-parkinsans">
+                              ₦{Number(product.minPrice).toLocaleString()} - ₦{Number(product.maxPrice).toLocaleString()}
+                            </p>
+                            <p className="text-xs md:text-sm text-gray-600">
+                              Price Range
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-xl md:text-3xl font-bold text-[#144E42] font-parkinsans">
+                              ₦{product.pricePerKg}/kg
+                            </p>
+                            <p className="text-xs md:text-sm text-gray-600">
+                              Price per kg
+                            </p>
+                          </>
+                        )}
                       </div>
                     </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
 
 interface BuyRequestSummaryProps {
     formData: {
@@ -11,7 +11,8 @@ interface BuyRequestSummaryProps {
         priceMax: string;
         location: string;
         description: string;
-        images: File[];
+        image: File | null;
+        existingImageUrl?: string | null;
     };
     onSubmit: () => void;
     onEdit: () => void;
@@ -59,19 +60,27 @@ export default function BuyRequestSummary({
             </div>
 
             {/* Uploaded Images */}
-            {formData.images.length > 0 && (
+            {(formData.image || formData.existingImageUrl) && (
                 <div>
-                    <p className="text-gray-600 font-medium mb-3">Uploaded Images</p>
+                    <p className="text-gray-600 font-medium mb-3">Uploaded Image</p>
                     <div className="flex gap-4 overflow-x-auto pb-2">
-                        {formData.images.map((file, index) => (
-                            <div key={index} className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                        <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                            {formData.image ? (
                                 <img
-                                    src={URL.createObjectURL(file)}
-                                    alt={`Uploaded Preview ${index + 1}`}
+                                    src={URL.createObjectURL(formData.image)}
+                                    alt="Uploaded Preview"
                                     className="w-full h-full object-cover"
                                 />
-                            </div>
-                        ))}
+                            ) : (
+                                <Image
+                                    src={formData.existingImageUrl!}
+                                    alt="Existing Preview"
+                                    fill
+                                    className="object-cover"
+                                    sizes="80px"
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
@@ -82,7 +91,7 @@ export default function BuyRequestSummary({
                     onClick={onSubmit}
                     className="w-full px-6 py-3 md:py-4 rounded-lg bg-[#84D35E] text-[#144E42] font-parkinsans font-bold text-base md:text-lg hover:bg-[#76c052] transition-colors shadow-md"
                 >
-                    Upload Request
+                    Confirm Request
                 </button>
                 <button
                     onClick={onEdit}

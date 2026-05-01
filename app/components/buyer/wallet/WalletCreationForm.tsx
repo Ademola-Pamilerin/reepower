@@ -4,9 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import WalletVerificationModal from "./WalletVerificationModal";
 import { useWallet } from "../../../context/WalletContext";
+import { useCreateWallet, useRequestOtp } from "@/hooks/use-wallet";
+import { toast } from "sonner";
 
 export default function WalletCreationForm() {
-    const { createWallet } = useWallet();
+    const { createWallet: setContextWallet } = useWallet();
+    const createWalletMutation = useCreateWallet();
+    const requestOtpMutation = useRequestOtp();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalStep, setModalStep] = useState<
         "email-sent" | "phone-verify" | "enter-pin" | "confirm-pin" | "success"
@@ -17,6 +21,7 @@ export default function WalletCreationForm() {
         email: "",
         phoneNumber: "",
         bvn: "",
+        accountName: "",
     });
 
     const handleChange = (
@@ -26,15 +31,29 @@ export default function WalletCreationForm() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const isFormValid = formData.email && formData.phoneNumber && formData.bvn;
+    const isFormValid = formData.email && formData.phoneNumber && formData.bvn && formData.accountName && formData.bvn.length === 11;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!isFormValid) return;
 
-        // Simulate sending email
-        setIsModalOpen(true);
-        setModalStep("email-sent");
+        try {
+            // First: Create the wallet
+            await createWalletMutation.mutateAsync({
+                email: formData.email,
+                phone_number: formData.phoneNumber,
+                bvn: formData.bvn,
+                account_name: formData.accountName,
+            });
+
+            // Second: If successful, request the OTP
+            await requestOtpMutation.mutateAsync(formData.phoneNumber);
+            
+            setIsModalOpen(true);
+            setModalStep("email-sent"); // Modal step for "Code Sent to Phone"
+        } catch (error: any) {
+            toast.error(error.message || "Failed to initiate wallet creation. Please try again.");
+        }
     };
 
     const handleVerifyPhone = async (code: string) => {
@@ -58,13 +77,14 @@ export default function WalletCreationForm() {
     const handleConfirmPin = async (confirmPin: string) => {
         // Check if PINs match
         if (confirmPin === enteredPin) {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            createWallet({
+            // Wallet was already created in handleSubmit, 
+            // so we just finalize the UI flow here after PIN setup.
+            setContextWallet({
                 ...formData,
             });
             setModalStep("success");
         } else {
-            alert("PINs do not match. Please try again.");
+            toast.error("PINs do not match. Please try again.");
             setModalStep("enter-pin");
             setEnteredPin("");
         }
@@ -118,6 +138,26 @@ export default function WalletCreationForm() {
                             className="bg-white border border-gray-200 rounded-xl p-6 md:p-8 shadow-sm"
                         >
                             <div className="space-y-6">
+                                {/* Account Name */}
+                                <div>
+                                    <label
+                                        htmlFor="accountName"
+                                        className="block text-sm font-semibold text-gray-700 mb-2"
+                                    >
+                                        Account Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="accountName"
+                                        name="accountName"
+                                        value={formData.accountName}
+                                        onChange={handleChange}
+                                        placeholder="Enter account name"
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#144E42] focus:ring-2 focus:ring-[#144E42] focus:ring-opacity-20 outline-none transition-all text-black font-normal"
+                                        required
+                                    />
+                                </div>
+
                                 {/* Email Address */}
                                 <div>
                                     <label
@@ -183,13 +223,13 @@ export default function WalletCreationForm() {
                                 <div className="pt-4">
                                     <button
                                         type="submit"
-                                        disabled={!isFormValid}
-                                        className={`w-full px-6 py-4 rounded-lg font-parkinsans font-bold text-lg transition-colors shadow-lg hover:shadow-xl ${isFormValid
+                                        disabled={!isFormValid || createWalletMutation.isPending || requestOtpMutation.isPending}
+                                        className={`w-full px-6 py-4 rounded-lg font-parkinsans font-bold text-lg transition-colors shadow-lg hover:shadow-xl ${isFormValid && !createWalletMutation.isPending && !requestOtpMutation.isPending
                                             ? "bg-[#144E42] text-white hover:bg-[#0f3b32]"
                                             : "bg-[#B9F17A] text-[#144E42] cursor-not-allowed opacity-50"
                                             }`}
                                     >
-                                        Proceed
+                                        {createWalletMutation.isPending ? "Creating Wallet..." : requestOtpMutation.isPending ? "Sending OTP..." : "Proceed"}
                                     </button>
                                 </div>
                             </div>

@@ -9,6 +9,7 @@ interface BuyRequestSubmissionModalProps {
     step: "loading" | "success";
     onViewRequests: () => void;
     onCreateNew: () => void;
+    isEditing?: boolean;
 }
 
 export default function BuyRequestSubmissionModal({
@@ -16,6 +17,7 @@ export default function BuyRequestSubmissionModal({
     step,
     onViewRequests,
     onCreateNew,
+    isEditing = false,
 }: BuyRequestSubmissionModalProps) {
     if (!isOpen) return null;
 
@@ -28,7 +30,7 @@ export default function BuyRequestSubmissionModal({
             <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 transform transition-all scale-100">
                 {step === "loading" && (
                     <div className="py-12 flex flex-col items-center justify-center">
-                        <LoadingDots text="Submitting Buy Request..." />
+                        <LoadingDots text={isEditing ? "Updating Buy Request..." : "Submitting Buy Request..."} />
                     </div>
                 )}
 
@@ -36,6 +38,7 @@ export default function BuyRequestSubmissionModal({
                     <BuyRequestSuccess
                         onViewRequests={onViewRequests}
                         onCreateNew={onCreateNew}
+                        isEditing={isEditing}
                     />
                 )}
             </div>

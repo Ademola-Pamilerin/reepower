@@ -5,11 +5,13 @@ import React from "react";
 interface BuyRequestSuccessProps {
     onViewRequests: () => void;
     onCreateNew: () => void;
+    isEditing?: boolean;
 }
 
 export default function BuyRequestSuccess({
     onViewRequests,
     onCreateNew,
+    isEditing = false,
 }: BuyRequestSuccessProps) {
     return (
         <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm flex flex-col items-center justify-center min-h-[400px] text-center">
@@ -19,10 +21,13 @@ export default function BuyRequestSuccess({
                 </svg>
             </div>
             <h3 className="text-2xl font-bold text-black font-parkinsans mb-2">
-                Buy Request Successfully Created!
+                {isEditing ? "Buy Request Successfully Updated!" : "Buy Request Successfully Created!"}
             </h3>
             <p className="text-gray-500 mb-8 max-w-md">
-                Your request has been posted to the marketplace. Sellers will be notified and can start making offers.
+                {isEditing
+                    ? "Your request has been edited. View the request to verify changes."
+                    : "Your request has been posted to the marketplace. Sellers will be notified and can start making offers."
+                }
             </p>
             <div className="w-full max-w-xs space-y-3">
                 <button
@@ -35,7 +40,7 @@ export default function BuyRequestSuccess({
                     onClick={onCreateNew}
                     className="w-full py-3 border border-gray-200 text-gray-600 font-medium rounded-lg font-parkinsans hover:bg-gray-50 transition-colors"
                 >
-                    Create Another Request
+                    {isEditing ? "Create New Request" : "Create Another Request"}
                 </button>
             </div>
         </div>

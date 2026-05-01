@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 interface BuyRequestFormFieldsProps {
     formData: {
@@ -11,13 +12,14 @@ interface BuyRequestFormFieldsProps {
         priceMax: string;
         location: string;
         description: string;
-        images: File[];
+        image: File | null;
+        existingImageUrl?: string | null;
     };
     handleChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => void;
     handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleRemoveImage: (index: number) => void;
+    handleRemoveImage: () => void;
     onSubmit: (e: React.FormEvent) => void;
     isEditing?: boolean;
     onDelete?: () => void;
@@ -198,37 +200,44 @@ export default function BuyRequestFormFields({
                             type="file"
                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                             accept="image/*"
-                            multiple
                             onChange={handleImageChange}
                         />
-                        {formData.images.length > 0 && (
+                        {formData.image && (
                             <p className="text-xs text-[#144E42] font-medium mt-2">
-                                {formData.images.length} file(s) selected
+                                1 file selected
                             </p>
                         )}
                     </div>
                     {/* Image Previews in Form */}
-                    {formData.images.length > 0 && (
+                    {(formData.image || formData.existingImageUrl) && (
                         <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-4">
-                            {formData.images.map((file, index) => (
-                                <div key={index} className="relative aspect-square rounded-lg overflow-hidden border border-gray-200 group">
+                            <div className="relative aspect-square rounded-lg overflow-hidden border border-gray-200 group">
+                                {formData.image ? (
                                     <img
-                                        src={URL.createObjectURL(file)}
-                                        alt={`Preview ${index + 1}`}
+                                        src={URL.createObjectURL(formData.image)}
+                                        alt="Preview"
                                         className="w-full h-full object-cover"
                                     />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleRemoveImage(index)}
-                                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity shadow-sm"
-                                        title="Remove image"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            ))}
+                                ) : (
+                                    <Image
+                                        src={formData.existingImageUrl!}
+                                        alt="Preview"
+                                        fill
+                                        className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity shadow-sm z-10"
+                                    title="Remove image"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>
